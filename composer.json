@@ -2,7 +2,7 @@
 	"name": "boomerang/boomerang",
 	"type": "library",
 	"homepage": "https://boomerang.work/",
-	"description": "The Boomerang API Endpoint Testing Framework.",
+	"description": "The Boomerang API Endpoint Surface Testing Framework.",
 	"keywords": [
 		"api",
 		"testing"
@@ -14,7 +14,8 @@
 	"require": {
 		"donatj/cli-toolkit": "~0.2",
 		"donatj/flags": "~1",
-		"php": ">=5.4.0",
+
+		"php": ">=7.1.0",
 		"ext-curl": "*",
 		"ext-SPL": "*",
 		"ext-json": "*"
@@ -22,8 +23,9 @@
 	"require-dev": {
 		"donatj/drop": "*",
 		"donatj/mock-webserver": "~0.4.0",
-		"phpunit/phpunit": "4.*",
-		"ralouphie/getallheaders": "^2.0"
+		"phpunit/phpunit": "6.*",
+		"ralouphie/getallheaders": "^2.0",
+		"friendsofphp/php-cs-fixer": "^2.13"
 	},
 	"authors": [
 		{

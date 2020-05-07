@@ -2,10 +2,13 @@
 
 namespace Boomerang\Test;
 
+use Boomerang\Factories\HttpResponseFactory;
 use Boomerang\HttpRequest;
+use Boomerang\Interfaces\HttpResponseInterface;
 use donatj\MockWebServer\MockWebServer;
+use PHPUnit\Framework\TestCase;
 
-class HttpRequestTest extends \PHPUnit_Framework_TestCase {
+class HttpRequestTest extends TestCase {
 
 	/** @var MockWebServer */
 	public static $webServer;
@@ -22,13 +25,11 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals('application/json', $headers_a[0]);
 
-
 		$req       = new HttpRequest('http://example.com/test.xml');
 		$headers   = $req->getHeaders();
 		$headers_a = explode(',', $headers['Accept']);
 
 		$this->assertEquals('application/xml', $headers_a[0]);
-
 
 		$req = new HttpRequest('http://example.com/test.xml');
 		$req->setHeader('Accept', 'application/json');
@@ -70,10 +71,10 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase {
 			HttpRequest::OPTIONS,
 		];
 
-		$mockResponse = $this->getMock('Boomerang\\HttpResponse', [], [], '', false);
+		$mockResponse = $this->getMockBuilder(HttpResponseInterface::class)->getMock();
 
 		foreach( $methods as $method ) {
-			$mockFactory     = $this->getMock('Boomerang\\Factories\\HttpResponseFactory');
+			$mockFactory     = $this->getMockBuilder(HttpResponseFactory::class)->getMock();
 			$mockNewInstance = $mockFactory->method('newInstance');
 
 			$mockNewInstance->will($this->returnCallback(function ( $body, $headers, HttpRequest $request ) use ( $mockResponse, $method ) {
@@ -100,8 +101,8 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testDeprecatedPostMethod() {
-		$mockResponse    = $this->getMock('Boomerang\\HttpResponse', [], [], '', false);
-		$mockFactory     = $this->getMock('Boomerang\\Factories\\HttpResponseFactory');
+		$mockResponse    = $this->getMockBuilder(HttpResponseInterface::class)->getMock();
+		$mockFactory     = $this->getMockBuilder(HttpResponseFactory::class)->getMock();
 		$mockNewInstance = $mockFactory->method('newInstance');
 
 		$mockNewInstance->will($this->returnCallback(function ( $body, $headers, HttpRequest $request ) use ( $mockResponse ) {
@@ -127,8 +128,8 @@ class HttpRequestTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCookiesFollowRedirects() {
-		$mockResponse    = $this->getMock('Boomerang\\HttpResponse', [], [], '', false);
-		$mockFactory     = $this->getMock('Boomerang\\Factories\\HttpResponseFactory');
+		$mockResponse    = $this->getMockBuilder(HttpResponseInterface::class)->getMock();
+		$mockFactory     = $this->getMockBuilder(HttpResponseFactory::class)->getMock();
 		$mockNewInstance = $mockFactory->method('newInstance');
 
 		$mockNewInstance->will($this->returnCallback(function ( $body, $headers, HttpRequest $request ) use ( $mockResponse ) {
